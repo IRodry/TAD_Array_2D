@@ -1,0 +1,94 @@
+class node:
+    """Clase que representa"""
+    def __init__(self, row, col, value):
+        self.row = row
+        self.col = col
+        self.value = value
+        self.prev = None #Nodo anterior
+        self.next = None #Nodo posterior
+        
+    def __str__(self):
+        return f"[row = {self.row}, col = {self.col}, value = {self.value}"
+
+    
+    
+class sparsearray:
+    """Implementación del TAD Array 2D disperso utilizando lista doble enlazada"""
+    def __init__(self,rows, columns):
+        if rows < 1:
+            rows = 10
+        if columns < 1:
+            columns = 10
+            
+        self.rows = rows
+        self.columns = columns
+        self.first = None #apunta al primer nodo de la lista
+        
+    def setvalue(self, row, column, value):
+        if not (1 <= row <= self.rows and 1 <= column <= self.columns):
+            raise ValueError(f"Indices incorrectos, fuera de rango:({row},{column})")
+        if value == 0:
+            return
+        current = self.first
+        
+        while current:
+            if current.row == row and current.col == column:
+                current.value = value
+                return
+            current = current.next
+        
+        new_node = node (row, column, value)
+        new_node.next = self.first
+        if self.first__:
+            self.first.prev = new_node
+        self.first = new_node
+        
+    def resetposition(self, row, column):
+        #Paso 1: Verificar si los índices son válidos
+        if not (1 <= row <= self.rows and 1 <= column <= self.columns):
+            return False
+        current = self.first
+        while current:
+            if current.row == row and current.col == column:
+                if current.prev:
+                    current.prev.next = current.next
+                if current.next:
+                    current.next.prev = current.prev
+                if current == self.first:
+                    self.first = current.next
+                return True
+            current = current.next
+        return False
+    
+    def getvalue(self, row, column):
+        if not (1 <= row <= self.rows and 1 <= column <= self.columns):
+            return None
+        current = self.first
+        while current:
+            if current.row == row and current.col == column:
+                return current.value
+            current = current.next
+        return 0
+    
+    def nozeros(self):
+        count = 0
+        current = self.first
+        while current:
+            count += 1
+            current = current.next
+        return count
+    
+    def __str__(self):
+        if not self.first:
+            return "[Zero Array]"
+        elements = []
+        current = self.first
+        while current:
+            elements.append(str(current))
+            current = current.next
+        return "    ".join(elements)
+    
+        
+        
+            
+            
