@@ -1,0 +1,36 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+class IntegerStack:
+    def __init__(self):
+        self.top = None #Inicializar la pila como vacía
+
+    def push(self, value):
+        if value is None: #No se permite valores None
+            return
+        new_node = Node(value) #Crear un nuevo nodo con el valor dado
+        new_node.next = self.top #El nuevo nodo se fija al nodo actual de la pila
+        self.top = new_node #El nuevo nodo es el primero de la pila
+        
+    def pop(self):
+        if self.top is None: #No se puede quitar de una pila vacía
+            return None
+        value = self.top.value #Tomar el valor del elemento primero
+        self.top = self.top.next #Mover al siguiente elemento
+        return value
+    
+    def top(self):
+        if self.top is None: #No hay elemento en la pila
+            return None
+        return self.top.value #Devuelve el valor del elemento primero de la pila
+    
+    def size(self):
+        count = 0 #Contar el número de elementos en la pila
+        current = self.top #Iniciar desde el principio
+        while current: 
+            count += 1 #Aumentar por cada elemento
+            current = current.next #Usar el siguiente elemento
+        return count #Devuelve el total de elementos en la pila
